@@ -1,3 +1,5 @@
+# Author: James Brock
+
 import json
 import os
 import random
@@ -44,7 +46,7 @@ def fetch_and_cache_songs(artist, cache_file):
         songs.append({"title": song.title, "lyrics": song.lyrics, "url": song.url})
 
     # Cache the songs in the JSON file
-    with open(cache_file, "w") as f:
+    with open(cache_file, "w", encoding="utf-8") as f:
         json.dump(songs, f, indent=4)
     print(f"Cached {len(songs)} songs for {artist} in {cache_file}.")
 
@@ -56,7 +58,7 @@ def fetch_random_song(artist):
 
     if os.path.exists(cache_file) and os.path.getsize(cache_file) > 0:
         print(f"Loading cached songs for {artist}")
-        with open(cache_file, "r") as f:
+        with open("song_collections" / cache_file, "r", encoding="utf-8") as f:
             songs = json.load(f)
     else:
         songs = fetch_and_cache_songs(artist, cache_file)
@@ -70,7 +72,7 @@ def fetch_random_song(artist):
 
 
 # Analyze lyrics with GPT
-def analyse_lyrics(lyrics, theme="meaningful message"):
+def analyse_lyrics(lyrics, theme):
     openai.api_key = os.environ["OPENAI_API_KEY"]
     response = openai.chat.completions.create(
         model="gpt-4o-mini",
@@ -109,7 +111,7 @@ def send_notification(lyrics, song_title, url):
 
 
 # Main function
-def main(artist, theme="meaningful message"):
+def main(artist, theme="meaningful"):
     song_title, lyrics, song_url = fetch_random_song(artist)
     if not song_title or not lyrics or not song_url:
         print("Failed to fetch song or lyrics.")
@@ -125,6 +127,6 @@ def main(artist, theme="meaningful message"):
 
 
 if __name__ == "__main__":
-    artist = "The Front Bottoms"
-    theme = "change"  # - Optional
-    main(artist, theme)
+    artist_name = "The Front Bottoms"
+    theme_choice = "change"  # - Optional
+    main(artist_name, theme_choice)
