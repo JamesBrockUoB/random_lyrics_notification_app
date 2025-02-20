@@ -39,3 +39,5 @@ It will ask you to provide a website address, any can be used here, so just plug
 - Keep a history of the lyrics previously served to reduce the chance they will be given again too soon - could provide a discount value that updates each day
 
 - Play around with different models - integrating in a local model to reduce costs
+
+- Add better validation of how well the selected lyrics align with the user's request
