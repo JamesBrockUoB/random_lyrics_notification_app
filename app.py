@@ -90,7 +90,7 @@ def analyse_lyrics(lyrics, theme):
                 "content": f"Find me some lyrics to ponder from: {lyrics}",
             },
         ],
-        max_tokens=50,
+        max_tokens=200,
     )
     return response.choices[0].message.content.strip()
 
