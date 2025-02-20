@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from lyricsgenius import Genius
 from pync import Notifier
 
+SONG_COLLECTION_FOLDER = "song_collections"
+
 
 def _set_env(var: str):
     if not os.environ.get(var):
@@ -28,7 +30,7 @@ set_env_vars()
 
 def get_cache_file(artist):
     cleaned_artist_name = "".join(c if c.isalnum() else "_" for c in artist)
-    return f"{cleaned_artist_name}.json"
+    return f"{SONG_COLLECTION_FOLDER}/{cleaned_artist_name}.json"
 
 
 def fetch_and_cache_songs(artist, cache_file):
@@ -58,7 +60,7 @@ def fetch_random_song(artist):
 
     if os.path.exists(cache_file) and os.path.getsize(cache_file) > 0:
         print(f"Loading cached songs for {artist}")
-        with open("song_collections" / cache_file, "r", encoding="utf-8") as f:
+        with open(cache_file, "r", encoding="utf-8") as f:
             songs = json.load(f)
     else:
         songs = fetch_and_cache_songs(artist, cache_file)
